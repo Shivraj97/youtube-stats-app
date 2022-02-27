@@ -15,6 +15,7 @@ import { Line } from "react-chartjs-2";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import Spinner from "../../Spinner/Spinner";
+import NoDataFound from "../../NoDataFound/NoDataFound";
 
 const Stats = ({ stats, loading, error, summaryDate }) => {
   //for Revenue
@@ -229,10 +230,26 @@ const Stats = ({ stats, loading, error, summaryDate }) => {
           </Box>
 
           <Divider />
-          {!loading ? (
+          {loading && <Spinner />}
+          {!error ? (
             <Line options={revenueOptions} data={Linedata} />
           ) : (
-            <Spinner />
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <NoDataFound />
+              <div
+                style={{
+                  color: "crimson",
+                  fontSize: "20px",
+                  fontWeight: "600",
+                }}
+              >
+                Oops, No Data Found!
+              </div>
+            </Box>
           )}
         </Box>
       </Box>
@@ -272,10 +289,26 @@ const Stats = ({ stats, loading, error, summaryDate }) => {
             <img src={IIcon} alt={""} style={{ marginLeft: "5px" }} />
           </Typography>
           <Divider />
-          {!loading ? (
+          {loading && <Spinner />}
+          {!error ? (
             <Line options={engagementOptions} data={Linedata2} />
           ) : (
-            <Spinner />
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <NoDataFound />
+              <div
+                style={{
+                  color: "crimson",
+                  fontSize: "20px",
+                  fontWeight: "600",
+                }}
+              >
+                Oops, No Data Found!
+              </div>
+            </Box>
           )}
         </Box>
       </Box>
@@ -315,10 +348,26 @@ const Stats = ({ stats, loading, error, summaryDate }) => {
             <img src={IIcon} alt={""} style={{ marginLeft: "5px" }} />
           </Typography>
           <Divider />
-          {!loading ? (
+          {loading && <Spinner />}
+          {!error ? (
             <Line options={audienceOptions} data={Linedata3} />
           ) : (
-            <Spinner />
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <NoDataFound />
+              <div
+                style={{
+                  color: "crimson",
+                  fontSize: "20px",
+                  fontWeight: "600",
+                }}
+              >
+                Oops, No Data Found!
+              </div>
+            </Box>
           )}
         </Box>
       </Box>
