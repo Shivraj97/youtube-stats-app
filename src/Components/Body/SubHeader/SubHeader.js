@@ -5,11 +5,51 @@ import TextField from "@mui/material/TextField";
 import DateRangePicker from "@mui/lab/DateRangePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import { formatDistanceToNowStrict } from "date-fns";
+import { formatDistanceStrict, format } from "date-fns";
+import { enUS } from "date-fns/locale";
+
+const getFormattedDate = (newValue) => {
+  let startDate = format(newValue[0], "LLL d yyyy", { locale: enUS });
+  let endDate = format(newValue[1], "LLL d yyyy", { locale: enUS });
+  startDate = startDate.split(" ");
+  endDate = endDate.split(" ");
+  let formattedStartDate = "";
+  let formattedEndDate = "";
+  if (endDate[2] === startDate[2]) {
+    formattedStartDate = startDate[0] + " " + startDate[1];
+  } else {
+    formattedStartDate = startDate[0] + " " + startDate[1] + " " + startDate[2];
+  }
+  if (endDate[0] === startDate[0]) {
+    formattedEndDate = endDate[1] + " " + endDate[2];
+  } else {
+    formattedEndDate = endDate[0] + " " + endDate[1] + " " + endDate[2];
+  }
+  return [formattedStartDate, formattedEndDate];
+};
 
 const SubHeader = ({ stats }) => {
   const data = stats?.summary;
-  const [value, setValue] = React.useState([null, null]);
+  const [value, setValue] = React.useState([new Date(), new Date()]);
+  const [summaryDate, setSummaryDate] = React.useState(() => {
+    const [formattedStartDate, formattedEndDate] = getFormattedDate([
+      new Date(),
+      new Date(),
+    ]);
+    return {
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+    };
+  });
+
+  const handleDateChange = (newValue) => {
+    setValue(newValue);
+    const [formattedStartDate, formattedEndDate] = getFormattedDate(newValue);
+    setSummaryDate((prevDate) => ({
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+    }));
+  };
 
   console.log({ value });
 
@@ -25,36 +65,13 @@ const SubHeader = ({ stats }) => {
             >
               Summary
             </Typography>
-          </Box>
-          <Box>
-            {/* <Typography
-              variant={"subtitle1"}
-              color={"#9A9A9A"}
-              style={{ whiteSpace: "pre" }}
-            >
-              Jan 3 - 9,2022
-            </Typography> */}
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateRangePicker
-                startText="Start Date"
-                endText="End Date"
-                format="DD-MM"
-                value={value}
-                onChange={(newValue) => {
-                  setValue(newValue);
-                }}
-                renderInput={(startProps, endProps) => (
-                  <>
-                    <TextField {...startProps} style={{ width: "38%" }} />
-                    <Box sx={{ mx: 1 }}> - </Box>
-                    <TextField {...endProps} style={{ width: "38%" }} />
-                  </>
-                )}
-              />
-            </LocalizationProvider>
+            <Typography>
+              {summaryDate 
+                ? `${summaryDate.startDate} - ${summaryDate.endDate}`
+                : ""}
+            </Typography>
           </Box>
         </Box>
-
         <Box>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateRangePicker
@@ -62,16 +79,52 @@ const SubHeader = ({ stats }) => {
               endText="End Date"
               value={value}
               format="DD-MM"
+              initialDate={new Date()}
               onChange={(newValue) => {
-                setValue(newValue);
+                handleDateChange(newValue);
               }}
-              renderInput={(startProps, endProps) => (
-                <>
-                  <TextField {...startProps} style={{ width: "38%" }} />
-                  <Box sx={{ mx: 1 }}> to </Box>
-                  <TextField {...endProps} style={{ width: "38%" }} />
-                </>
-              )}
+              // onClose={(newValue) => {
+              //   console.log("newValue", newValue);
+              //   handleDateChange(newValue);
+              // }}
+              renderInput={({ inputProps, ...startProps }, endProps) => {
+                const initialDate = new Date();
+                let range;
+                // const range = formatDistanceStrict(
+                //   new Date(2015, 0, 2),
+                //   new Date(2014, 8, 2)
+                // );
+                // const startValue = inputProps.value;
+                // delete inputProps.value;
+                // console.log("startValue", startValue);
+                // console.log("endProps", endProps.inputProps.value);
+                // const startDate = new Date(startValue);
+                // const endDate = new Date(endProps.inputProps.value);
+                // console.log("startDate", startDate);
+                // console.log("endDate", endDate);
+                // const start = startValue && startValue.split("/");
+                // const end = endProps && endProps.inputProps.value.split("/");
+                // let range;
+                // if (start && end.length) {
+                //     range = formatDistanceStrict(
+                //     new Date(+start[2], +start[1], +start[0]),
+                //     new Date(+end[2], +end[1], +end[0])
+                //   );
+                //   console.log("range1", range);
+                // }
+                return (
+                  <>
+                    <TextField
+                      {...startProps}
+                      inputProps={inputProps}
+                      value={`Last ${range ? range : initialDate}`}
+                      style={{ width: "90%" }}
+                    />
+                    {/* <Box sx={{ mx: 1 }}> to </Box>
+                  <TextField {...endProps} style={{ width: "38%" }} /> */}
+                  </>
+                );
+              }}
             />
           </LocalizationProvider>
         </Box>
