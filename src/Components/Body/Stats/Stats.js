@@ -238,8 +238,9 @@ const Stats = ({ stats, loading, error, summaryDate }) => {
               display={"flex"}
               flexDirection={"column"}
               alignItems={"center"}
+              justifyContent={"center"}
+              height={"75%"}
             >
-              <NoDataFound />
               <div
                 style={{
                   color: "crimson",
@@ -297,8 +298,9 @@ const Stats = ({ stats, loading, error, summaryDate }) => {
               display={"flex"}
               flexDirection={"column"}
               alignItems={"center"}
+              justifyContent={"center"}
+              height={"75%"}
             >
-              <NoDataFound />
               <div
                 style={{
                   color: "crimson",
@@ -356,8 +358,9 @@ const Stats = ({ stats, loading, error, summaryDate }) => {
               display={"flex"}
               flexDirection={"column"}
               alignItems={"center"}
+              justifyContent={"center"}
+              height={"75%"}
             >
-              <NoDataFound />
               <div
                 style={{
                   color: "crimson",
