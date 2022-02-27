@@ -6,6 +6,7 @@ import DateRangePicker from "@mui/lab/DateRangePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import getFormattedDate from "../../../utils/dateformatter";
+import numFormatter from "../../../utils/numFormatter";
 
 const SubHeader = ({
   stats,
@@ -133,7 +134,7 @@ const SubHeader = ({
             Subscribers
           </Typography>
           <Typography fontWeight={600} color={"#000000"}>
-            {data?.subscribers}
+            {numFormatter(data?.subscribers)}
           </Typography>
         </Box>
         <Box
@@ -151,7 +152,7 @@ const SubHeader = ({
             Views
           </Typography>
           <Typography fontWeight={600} color={"#000000"}>
-            {data?.views}
+            {numFormatter(data?.views)}
           </Typography>
         </Box>
         <Box
@@ -169,11 +170,20 @@ const SubHeader = ({
             Revenue
           </Typography>
           <Typography fontWeight={600} color={"#000000"}>
-            {data?.revenue}
+            {data?.revenue.toLocaleString("en-US", {
+              style: "currency",
+              currency: "INR",
+            })}
+            {" lac"}
           </Typography>
         </Box>
       </Box>
-      <Stats stats={stats} loading={loading} error={error} />
+      <Stats
+        stats={stats}
+        loading={loading}
+        error={error}
+        summaryDate={summaryDate}
+      />
     </>
   );
 };

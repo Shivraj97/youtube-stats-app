@@ -16,7 +16,7 @@ import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import Spinner from "../../Spinner/Spinner";
 
-const Stats = ({ stats, loading, error }) => {
+const Stats = ({ stats, loading, error, summaryDate }) => {
   //for Revenue
   const data = stats?.revenueDetails?.estimatedRevenueTrend;
   const graph = stats?.revenueDetails?.estimatedRevenueTrend?.data;
@@ -42,7 +42,7 @@ const Stats = ({ stats, loading, error }) => {
     Legend
   );
 
-  const options = {
+  const revenueOptions = {
     responsive: true,
     plugins: {
       legend: {
@@ -52,6 +52,64 @@ const Stats = ({ stats, loading, error }) => {
     elements: {
       point: {
         radius: 0,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          callback: function (value) {
+            return value.toLocaleString("en-US", {
+              style: "currency",
+              currency: "INR",
+            });
+          },
+        },
+      },
+    },
+  };
+
+  const engagementOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    elements: {
+      point: {
+        radius: 0,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          callback: function (value) {
+            return value + "M";
+          },
+        },
+      },
+    },
+  };
+
+  const audienceOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    elements: {
+      point: {
+        radius: 0,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          callback: function (value) {
+            return value + "%";
+          },
+        },
       },
     },
   };
@@ -125,7 +183,9 @@ const Stats = ({ stats, loading, error }) => {
           Revenue
         </Typography>
         <Typography variant={"subtitle1"} color={"#9A9A9A"}>
-          jan 3 - 9,2022
+          {summaryDate
+            ? `${summaryDate.startDate} - ${summaryDate.endDate}`
+            : ""}
         </Typography>
         <Box
           style={{
@@ -147,7 +207,11 @@ const Stats = ({ stats, loading, error }) => {
             Estimated Revenue
           </Typography>
           <Typography fontWeight={600} fontSize={24} color={"#000000"}>
-            {data?.value}M
+            {data?.value.toLocaleString("en-US", {
+              style: "currency",
+              currency: "INR",
+            })}{" "}
+            {" lac"}
           </Typography>
           <Typography fontSize={12} color={"#11AC6A"}>
             +{data?.change?.percentage}%
@@ -165,7 +229,11 @@ const Stats = ({ stats, loading, error }) => {
           </Box>
 
           <Divider />
-          {!loading ? <Line options={options} data={Linedata} /> : <Spinner />}
+          {!loading ? (
+            <Line options={revenueOptions} data={Linedata} />
+          ) : (
+            <Spinner />
+          )}
         </Box>
       </Box>
       <Box m={"50px 20px 20px 20px"}>
@@ -173,7 +241,9 @@ const Stats = ({ stats, loading, error }) => {
           Reach and Engagement
         </Typography>
         <Typography variant={"subtitle1"} color={"#9A9A9A"}>
-          jan 3 - 9,2022
+          {summaryDate
+            ? `${summaryDate.startDate} - ${summaryDate.endDate}`
+            : ""}
         </Typography>
         <Box
           style={{
@@ -198,11 +268,15 @@ const Stats = ({ stats, loading, error }) => {
             {viewDetails?.change?.value}M
           </Typography>
           <Typography fontSize={12} color={"#11AC6A"}>
-            +{viewDetails?.change?.percentage}%
+            {viewDetails?.change?.percentage}%
             <img src={IIcon} alt={""} style={{ marginLeft: "5px" }} />
           </Typography>
           <Divider />
-          {!loading ? <Line options={options} data={Linedata2} /> : <Spinner />}
+          {!loading ? (
+            <Line options={engagementOptions} data={Linedata2} />
+          ) : (
+            <Spinner />
+          )}
         </Box>
       </Box>
       <Box m={"50px 20px 20px 20px"}>
@@ -210,7 +284,9 @@ const Stats = ({ stats, loading, error }) => {
           Audience
         </Typography>
         <Typography variant={"subtitle1"} color={"#9A9A9A"}>
-          jan 3 - 9,2022
+          {summaryDate
+            ? `${summaryDate.startDate} - ${summaryDate.endDate}`
+            : ""}
         </Typography>
         <Box
           style={{
@@ -232,14 +308,18 @@ const Stats = ({ stats, loading, error }) => {
             Subscriber views vs total views
           </Typography>
           <Typography fontWeight={600} fontSize={24} color={"#000000"}>
-            {subTotalDetails?.change?.value}M
+            {subTotalDetails?.change?.value}%
           </Typography>
           <Typography fontSize={12} color={"#11AC6A"}>
             +{subTotalDetails?.change?.percentage}%
             <img src={IIcon} alt={""} style={{ marginLeft: "5px" }} />
           </Typography>
           <Divider />
-          {!loading ? <Line options={options} data={Linedata3} /> : <Spinner />}
+          {!loading ? (
+            <Line options={audienceOptions} data={Linedata3} />
+          ) : (
+            <Spinner />
+          )}
         </Box>
       </Box>
     </>

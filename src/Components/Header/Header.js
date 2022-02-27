@@ -4,6 +4,7 @@ import { Avatar, Box } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Typography } from "@mui/material";
 import { ReactComponent as YouTubeIcon } from "../../assets/youtube-logo.svg";
+import numFormatter from "../../utils/numFormatter";
 
 const Header = ({ stats }) => {
   const classes = useStyles();
@@ -39,7 +40,7 @@ const Header = ({ stats }) => {
             {data?.channelName}
           </Typography>
           <Typography variant={"subtitle2"} color={"white"}>
-            {data?.subscribersCount} subscribers
+            {numFormatter(data?.subscribersCount)} subscribers
             <span style={{ color: "#ffffff" }}>&nbsp;&#183;&nbsp; </span>
             {data?.videoCount} videos
           </Typography>
