@@ -20,6 +20,7 @@ const SubHeader = ({
   error,
 }) => {
   const data = stats?.summary;
+  const metadata = stats?.metadata;
 
   const handleDateChange = (newValue) => {
     setValue(newValue);
@@ -134,7 +135,7 @@ const SubHeader = ({
             Subscribers
           </Typography>
           <Typography fontWeight={600} color={"#000000"}>
-            {numFormatter(data?.subscribers)}
+            {numFormatter(metadata?.subscribersCount)}
           </Typography>
         </Box>
         <Box
