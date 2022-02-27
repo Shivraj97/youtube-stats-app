@@ -15,7 +15,6 @@ import { Line } from "react-chartjs-2";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import Spinner from "../../Spinner/Spinner";
-import NoDataFound from "../../NoDataFound/NoDataFound";
 
 const Stats = ({ stats, loading, error, summaryDate }) => {
   //for Revenue
@@ -31,7 +30,6 @@ const Stats = ({ stats, loading, error, summaryDate }) => {
     stats?.audienceDetails?.viewsSubscriberVsNonSubscribersTrend;
   const subTotalgraph =
     stats?.audienceDetails?.viewsSubscriberVsNonSubscribersTrend?.data;
-  // console.log({ graph });
 
   ChartJS.register(
     CategoryScale,
@@ -172,10 +170,6 @@ const Stats = ({ stats, loading, error, summaryDate }) => {
       },
     ],
   };
-
-  // console.log({ Linedata });
-  // console.log({ Linedata2 });
-  // console.log({ Linedata3 });
 
   return (
     <>

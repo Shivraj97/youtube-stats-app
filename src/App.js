@@ -37,10 +37,10 @@ function App() {
       setStats(data);
       setLoading(false);
       setError("");
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.log(err);
       setLoading(false);
-      setError(e);
+      setError(err);
     }
   };
 
@@ -48,14 +48,8 @@ function App() {
     let startValue =
       value[0] && format(value[0], "yyyy-MM-dd", { locale: enUS });
     let endValue = value[1] && format(value[1], "yyyy-MM-dd", { locale: enUS });
-    console.log("startValue", startValue);
-    console.log("endValue", endValue);
     getData(startValue, endValue);
   }, [open]);
-
-  // console.log({ stats });
-  console.log("summarydate", summaryDate);
-  console.log("value", value);
 
   return (
     <ThemeProvider theme={theme}>

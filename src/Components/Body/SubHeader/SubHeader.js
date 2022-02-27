@@ -1,12 +1,13 @@
 import * as React from "react";
 import Stats from "../Stats/Stats";
 import { Typography, Box } from "@mui/material";
-import TextField from "@mui/material/TextField";
 import DateRangePicker from "@mui/lab/DateRangePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import getFormattedDate from "../../../utils/dateformatter";
 import numFormatter from "../../../utils/numFormatter";
+import ArrowDown from "../../../assets/arrowdown.svg";
+import { differenceInDays } from "date-fns";
 
 const SubHeader = ({
   stats,
@@ -19,6 +20,7 @@ const SubHeader = ({
   loading,
   error,
 }) => {
+  const [showModal, setShowModal] = React.useState(false);
   const data = stats?.summary;
   const metadata = stats?.metadata;
 
@@ -30,8 +32,6 @@ const SubHeader = ({
       endDate: formattedEndDate,
     }));
   };
-
-  // console.log({ value });
 
   return (
     <>
@@ -55,8 +55,10 @@ const SubHeader = ({
         <Box>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateRangePicker
+              open={showModal}
               startText="Start Date"
               endText="End Date"
+              maxDate={new Date()}
               value={value}
               format="DD-MM"
               initialDate={new Date()}
@@ -65,46 +67,25 @@ const SubHeader = ({
               }}
               onClose={(newValue) => {
                 isOpen(!open);
+                setShowModal(!showModal);
               }}
-              renderInput={({ inputProps, ...startProps }, endProps) => {
-                const initialDate = new Date();
-                let range;
-                // const range = formatDistanceStrict(
-                //   new Date(2015, 0, 2),
-                //   new Date(2014, 8, 2)
-                // );
-                // const startValue = inputProps.value;
-                // delete inputProps.value;
-                // console.log("startValue", startValue);
-                // console.log("endProps", endProps.inputProps.value);
-                // const startDate = new Date(startValue);
-                // const endDate = new Date(endProps.inputProps.value);
-                // console.log("startDate", startDate);
-                // console.log("endDate", endDate);
-                // const start = startValue && startValue.split("/");
-                // const end = endProps && endProps.inputProps.value.split("/");
-                // let range;
-                // if (start && end.length) {
-                //     range = formatDistanceStrict(
-                //     new Date(+start[2], +start[1], +start[0]),
-                //     new Date(+end[2], +end[1], +end[0])
-                //   );
-                //   console.log("range1", range);
-                // }
-                return (
-                  <>
-                    <TextField
-                      {...startProps}
-                      inputProps={inputProps}
-                      value={`Last ${range ? range : initialDate}`}
-                      style={{ width: "90%" }}
-                    />
-                    {/* <Box sx={{ mx: 1 }}> to </Box>
-                  <TextField {...endProps} style={{ width: "38%" }} /> */}
-                  </>
-                );
-              }}
+              renderInput={({ inputProps, ...startProps }, endProps, ref) => (
+                <div></div>
+              )}
             />
+            <Box
+              display={"flex"}
+              border={"1px solid #DCDCDC"}
+              p={"10px"}
+              borderRadius={"18px"}
+            >
+              <Typography onClick={(e) => setShowModal(!showModal)}>
+                {value
+                  ? `Last ${differenceInDays(value[1], value[0])} days`
+                  : "Select Date Range"}
+              </Typography>
+              <img src={ArrowDown} alt={""} style={{ marginLeft: "10px" }} />
+            </Box>
           </LocalizationProvider>
         </Box>
       </Box>
