@@ -11,6 +11,8 @@ import SubHeader from "./Components/Body/SubHeader/SubHeader";
 
 function App() {
   const [stats, setStats] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(false);
   const [open, isOpen] = React.useState(false);
   const [value, setValue] = React.useState([
     new Date("2021-01-01"),
@@ -33,8 +35,12 @@ function App() {
         `https://qorner-mock-server.herokuapp.com/stats?startDate=${startDate}&endDate=${endDate}`
       );
       setStats(data);
+      setLoading(false);
+      setError("");
     } catch (e) {
       console.log(e);
+      setLoading(false);
+      setError(e);
     }
   };
 
@@ -56,13 +62,14 @@ function App() {
       <Header stats={stats} />
       <SubHeader
         stats={stats}
-        setStats={setStats}
         value={value}
         setValue={setValue}
         summaryDate={summaryDate}
         setSummaryDate={setSummaryDate}
         open={open}
         isOpen={isOpen}
+        loading={loading}
+        error={error}
       />
     </ThemeProvider>
   );

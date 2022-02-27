@@ -14,8 +14,9 @@ import {
 import { Line } from "react-chartjs-2";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
+import Spinner from "../../Spinner/Spinner";
 
-const Stats = ({ stats }) => {
+const Stats = ({ stats, loading, error }) => {
   //for Revenue
   const data = stats?.revenueDetails?.estimatedRevenueTrend;
   const graph = stats?.revenueDetails?.estimatedRevenueTrend?.data;
@@ -52,7 +53,7 @@ const Stats = ({ stats }) => {
       point: {
         radius: 0,
       },
-    }
+    },
   };
 
   const labels = data?.data?.map((date) => {
@@ -79,7 +80,7 @@ const Stats = ({ stats }) => {
     datasets: [
       {
         data: graph?.map((data) => data?.value1),
-        borderColor: " #31E498",
+        borderColor: "#31E498",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],
@@ -90,7 +91,7 @@ const Stats = ({ stats }) => {
     datasets: [
       {
         data: viewGraph?.map((data) => data?.value1),
-        borderColor: " #31E498",
+        borderColor: "#31E498",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],
@@ -164,7 +165,7 @@ const Stats = ({ stats }) => {
           </Box>
 
           <Divider />
-          <Line options={options} data={Linedata} />
+          {!loading ? <Line options={options} data={Linedata} /> : <Spinner />}
         </Box>
       </Box>
       <Box m={"50px 20px 20px 20px"}>
@@ -201,7 +202,7 @@ const Stats = ({ stats }) => {
             <img src={IIcon} alt={""} style={{ marginLeft: "5px" }} />
           </Typography>
           <Divider />
-          <Line options={options} data={Linedata2} />
+          {!loading ? <Line options={options} data={Linedata2} /> : <Spinner />}
         </Box>
       </Box>
       <Box m={"50px 20px 20px 20px"}>
@@ -238,7 +239,7 @@ const Stats = ({ stats }) => {
             <img src={IIcon} alt={""} style={{ marginLeft: "5px" }} />
           </Typography>
           <Divider />
-          <Line options={options} data={Linedata3} />
+          {!loading ? <Line options={options} data={Linedata3} /> : <Spinner />}
         </Box>
       </Box>
     </>

@@ -9,13 +9,14 @@ import getFormattedDate from "../../../utils/dateformatter";
 
 const SubHeader = ({
   stats,
-  setStats,
   value,
   setValue,
   summaryDate,
   setSummaryDate,
   open,
   isOpen,
+  loading,
+  error,
 }) => {
   const data = stats?.summary;
 
@@ -172,7 +173,7 @@ const SubHeader = ({
           </Typography>
         </Box>
       </Box>
-      <Stats stats={stats} />
+      <Stats stats={stats} loading={loading} error={error} />
     </>
   );
 };

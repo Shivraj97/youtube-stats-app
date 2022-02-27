@@ -14,13 +14,13 @@ const Header = ({ stats }) => {
         display={"flex"}
         alignItems={"center"}
         justifyContent={"center"}
-        p={"10% 10% 5% 10%"}
+        p={"10% 10% 5% 0%"}
       >
         <Box>
           <ArrowBackIcon className={classes.arrowBackIcon} />
         </Box>
 
-        <Box display={"flex"} alignItems={"center"} m={"0 auto"}>
+        <Box display={"flex"} alignItems={"center"} m={"0px auto 10px 50px"}>
           <Typography variant={"h5"} color={"white"} fontWeight={500}>
             Youtube Stats
           </Typography>{" "}
@@ -34,7 +34,7 @@ const Header = ({ stats }) => {
           style={{ marginRight: "5px", width: "50px", height: "50px" }}
         />
 
-        <Box display={"flex"} flexDirection={"column"}>
+        <Box display={"flex"} flexDirection={"column"} ml={"10px"}>
           <Typography variant={"h6"} color={"white"}>
             {data?.channelName}
           </Typography>
