@@ -12,11 +12,14 @@ import SubHeader from "./Components/Body/SubHeader/SubHeader";
 function App() {
   const [stats, setStats] = React.useState({});
   const [open, isOpen] = React.useState(false);
-  const [value, setValue] = React.useState([null, null]);
+  const [value, setValue] = React.useState([
+    new Date("2021-01-01"),
+    new Date("2021-01-31"),
+  ]);
   const [summaryDate, setSummaryDate] = React.useState(() => {
     const [formattedStartDate, formattedEndDate] = getFormattedDate([
-      new Date(),
-      new Date(),
+      new Date("2021-01-01"),
+      new Date("2021-01-31"),
     ]);
     return {
       startDate: formattedStartDate,

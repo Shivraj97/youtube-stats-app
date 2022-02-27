@@ -12,6 +12,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { format } from "date-fns";
+import { enUS } from "date-fns/locale";
 
 const Stats = ({ stats }) => {
   //for Revenue
@@ -43,26 +45,39 @@ const Stats = ({ stats }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        display: false,
       },
     },
+    elements: {
+      point: {
+        radius: 0,
+      },
+    }
   };
 
-  const labels = graph?.map((date) => date?.date);
-  const viewLabel = viewGraph?.map((date) => date?.date);
-  const subTotalLabels = subTotalgraph?.map((date) => date?.date);
-
-  const dateMonth = new Date().toLocaleString("en-us", {
-    month: "short",
-    year: "numeric",
+  const labels = data?.data?.map((date) => {
+    let formattedLabel = format(new Date(date.date), "LLL dd", {
+      locale: enUS,
+    });
+    return formattedLabel;
   });
-  // console.log({ dateMonth });
+  const viewLabel = viewDetails?.data?.map((viewDate) => {
+    let formattedLabel = format(new Date(viewDate.date), "LLL dd", {
+      locale: enUS,
+    });
+    return formattedLabel;
+  });
+  const subTotalLabels = subTotalDetails?.data?.map((subTotalDate) => {
+    let formattedLabel = format(new Date(subTotalDate.date), "LLL dd", {
+      locale: enUS,
+    });
+    return formattedLabel;
+  });
 
   const Linedata = {
-    labels,
+    labels: labels,
     datasets: [
       {
-        label: "Dataset 1",
         data: graph?.map((data) => data?.value1),
         borderColor: " #31E498",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -71,10 +86,9 @@ const Stats = ({ stats }) => {
   };
 
   const Linedata2 = {
-    viewLabel,
+    labels: viewLabel,
     datasets: [
       {
-        label: "Dataset 2",
         data: viewGraph?.map((data) => data?.value1),
         borderColor: " #31E498",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -83,13 +97,18 @@ const Stats = ({ stats }) => {
   };
 
   const Linedata3 = {
-    subTotalLabels,
+    labels: subTotalLabels,
     datasets: [
       {
-        label: "Dataset 3",
         data: subTotalgraph?.map((data) => data?.value1),
-        borderColor: " #31E498",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        fill: true,
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)",
+      },
+      {
+        data: subTotalgraph?.map((data) => data?.value2),
+        fill: false,
+        borderColor: "#FF5C00",
       },
     ],
   };

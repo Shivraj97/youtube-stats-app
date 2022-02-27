@@ -5,8 +5,6 @@ import TextField from "@mui/material/TextField";
 import DateRangePicker from "@mui/lab/DateRangePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import { formatDistanceStrict, format } from "date-fns";
-import { enUS } from "date-fns/locale";
 import getFormattedDate from "../../../utils/dateformatter";
 
 const SubHeader = ({

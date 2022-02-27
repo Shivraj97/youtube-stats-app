@@ -1,23 +1,15 @@
 import React from "react";
 import useStyles from "./styles";
 import { Avatar, Box } from "@mui/material";
-import YouTubeIcon from "@mui/icons-material/YouTube";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Typography } from "@mui/material";
+import { ReactComponent as YouTubeIcon } from "../../assets/youtube-logo.svg";
 
 const Header = ({ stats }) => {
   const classes = useStyles();
   const data = stats?.metadata;
   return (
-    <Box
-      height={"194px"}
-      top={0}
-      left={0}
-      style={{
-        background:
-          "linear-gradient(359.73deg, #000000 0.25%, rgba(0, 0, 0, 0) 99.77%)",
-      }}
-    >
+    <Box height={"194px"} top={0} left={0} className={classes.coverContainer}>
       <Box
         display={"flex"}
         alignItems={"center"}
