@@ -16,19 +16,10 @@ const SubHeader = ({
   setValue,
   summaryDate,
   setSummaryDate,
+  open,
+  isOpen,
 }) => {
   const data = stats?.summary;
-  // const [value, setValue] = React.useState([new Date(), new Date()]);
-  // const [summaryDate, setSummaryDate] = React.useState(() => {
-  //   const [formattedStartDate, formattedEndDate] = getFormattedDate([
-  //     new Date(),
-  //     new Date(),
-  //   ]);
-  //   return {
-  //     startDate: formattedStartDate,
-  //     endDate: formattedEndDate,
-  //   };
-  // });
 
   const handleDateChange = (newValue) => {
     setValue(newValue);
@@ -71,10 +62,9 @@ const SubHeader = ({
               onChange={(newValue) => {
                 handleDateChange(newValue);
               }}
-              // onClose={(newValue) => {
-              //   console.log("newValue", newValue);
-              //   handleDateChange(newValue);
-              // }}
+              onClose={(newValue) => {
+                isOpen(!open);
+              }}
               renderInput={({ inputProps, ...startProps }, endProps) => {
                 const initialDate = new Date();
                 let range;

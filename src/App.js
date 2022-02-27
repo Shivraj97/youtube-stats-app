@@ -11,6 +11,7 @@ import SubHeader from "./Components/Body/SubHeader/SubHeader";
 
 function App() {
   const [stats, setStats] = React.useState({});
+  const [open, isOpen] = React.useState(false);
   const [value, setValue] = React.useState([null, null]);
   const [summaryDate, setSummaryDate] = React.useState(() => {
     const [formattedStartDate, formattedEndDate] = getFormattedDate([
@@ -41,7 +42,7 @@ function App() {
     console.log("startValue", startValue);
     console.log("endValue", endValue);
     getData(startValue, endValue);
-  }, [value]);
+  }, [open]);
 
   // console.log({ stats });
   console.log("summarydate", summaryDate);
@@ -57,6 +58,8 @@ function App() {
         setValue={setValue}
         summaryDate={summaryDate}
         setSummaryDate={setSummaryDate}
+        open={open}
+        isOpen={isOpen}
       />
     </ThemeProvider>
   );
