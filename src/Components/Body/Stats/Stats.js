@@ -27,7 +27,7 @@ const Stats = ({ stats }) => {
     stats?.audienceDetails?.viewsSubscriberVsNonSubscribersTrend;
   const subTotalgraph =
     stats?.audienceDetails?.viewsSubscriberVsNonSubscribersTrend?.data;
-  console.log({ graph });
+  // console.log({ graph });
 
   ChartJS.register(
     CategoryScale,
@@ -56,7 +56,7 @@ const Stats = ({ stats }) => {
     month: "short",
     year: "numeric",
   });
-  console.log({ dateMonth });
+  // console.log({ dateMonth });
 
   const Linedata = {
     labels,
@@ -94,9 +94,9 @@ const Stats = ({ stats }) => {
     ],
   };
 
-  console.log({ Linedata });
-  console.log({ Linedata2 });
-  console.log({ Linedata3 });
+  // console.log({ Linedata });
+  // console.log({ Linedata2 });
+  // console.log({ Linedata3 });
 
   return (
     <>

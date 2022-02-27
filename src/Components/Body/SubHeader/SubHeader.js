@@ -7,40 +7,28 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { formatDistanceStrict, format } from "date-fns";
 import { enUS } from "date-fns/locale";
+import getFormattedDate from "../../../utils/dateformatter";
 
-const getFormattedDate = (newValue) => {
-  let startDate = format(newValue[0], "LLL d yyyy", { locale: enUS });
-  let endDate = format(newValue[1], "LLL d yyyy", { locale: enUS });
-  startDate = startDate.split(" ");
-  endDate = endDate.split(" ");
-  let formattedStartDate = "";
-  let formattedEndDate = "";
-  if (endDate[2] === startDate[2]) {
-    formattedStartDate = startDate[0] + " " + startDate[1];
-  } else {
-    formattedStartDate = startDate[0] + " " + startDate[1] + " " + startDate[2];
-  }
-  if (endDate[0] === startDate[0]) {
-    formattedEndDate = endDate[1] + " " + endDate[2];
-  } else {
-    formattedEndDate = endDate[0] + " " + endDate[1] + " " + endDate[2];
-  }
-  return [formattedStartDate, formattedEndDate];
-};
-
-const SubHeader = ({ stats }) => {
+const SubHeader = ({
+  stats,
+  setStats,
+  value,
+  setValue,
+  summaryDate,
+  setSummaryDate,
+}) => {
   const data = stats?.summary;
-  const [value, setValue] = React.useState([new Date(), new Date()]);
-  const [summaryDate, setSummaryDate] = React.useState(() => {
-    const [formattedStartDate, formattedEndDate] = getFormattedDate([
-      new Date(),
-      new Date(),
-    ]);
-    return {
-      startDate: formattedStartDate,
-      endDate: formattedEndDate,
-    };
-  });
+  // const [value, setValue] = React.useState([new Date(), new Date()]);
+  // const [summaryDate, setSummaryDate] = React.useState(() => {
+  //   const [formattedStartDate, formattedEndDate] = getFormattedDate([
+  //     new Date(),
+  //     new Date(),
+  //   ]);
+  //   return {
+  //     startDate: formattedStartDate,
+  //     endDate: formattedEndDate,
+  //   };
+  // });
 
   const handleDateChange = (newValue) => {
     setValue(newValue);
@@ -51,7 +39,7 @@ const SubHeader = ({ stats }) => {
     }));
   };
 
-  console.log({ value });
+  // console.log({ value });
 
   return (
     <>
@@ -66,7 +54,7 @@ const SubHeader = ({ stats }) => {
               Summary
             </Typography>
             <Typography>
-              {summaryDate 
+              {summaryDate
                 ? `${summaryDate.startDate} - ${summaryDate.endDate}`
                 : ""}
             </Typography>
